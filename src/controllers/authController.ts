@@ -10,22 +10,22 @@ export const loginByPhone = async (req: Request, res: Response) => {
 
     try {
         const [rows] = await query('CALL AutenticarPorTelefono(?)', [telefono]) as RowDataPacket[][];
-        const userJson = rows[0].user;
-        const user: User = JSON.parse(userJson);
-        console.log('user: ', user);
+        console.log('rows: ', rows);
+        const userJson = rows[0].user || rows[0].response;
+        const parsedResponse = JSON.parse(userJson);
 
-        if (user) {
-            const token = generateToken(user);
+        if (parsedResponse.id) {
+            const token = generateToken(parsedResponse);
             const response: ApiResponse<{ user: User; token: string }> = {
                 success: true,
-                data: { user, token },
+                data: { user: parsedResponse, token },
                 message: 'Login successful',
             };
             res.json(response);
         } else {
             const response: ErrorResponse = {
                 success: false,
-                message: 'User not found',
+                message: parsedResponse.message,
             };
             res.status(404).json(response);
         }

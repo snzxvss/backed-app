@@ -4,9 +4,9 @@
   "description": "A backend application using TypeScript, Node.js, and MySQL with stored procedures.",
   "main": "src/app.ts",
   "scripts": {
-    "start": "ts-node src/server.ts",
+    "start": "ts-node src/app.ts",
     "build": "tsc",
-    "dev": "nodemon --watch 'src/**/*.ts"
+    "dev": "nodemon --watch 'src/**/*.ts' src/app.ts"
   },
   "dependencies": {
     "@types/cors": "^2.8.17",

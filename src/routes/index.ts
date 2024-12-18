@@ -32,7 +32,7 @@ router.post('/auth/login/email', loginByEmailAndPasswordMiddlewares, loginByEmai
 
 // User
 router.post('/users', jwtValidation, createUserMiddlewares, createUser);
-router.post('/users/phone', jwtValidation, createUserByPhoneMiddlewares, createUserByPhone);
+router.post('/users/phone', createUserByPhoneMiddlewares, createUserByPhone);
 router.get('/users', jwtValidation, getUsers);
 router.put('/users', jwtValidation, updateUserMiddlewares, updateUser);
 router.delete('/users/:id', jwtValidation, deleteUserMiddlewares, deleteUser);
