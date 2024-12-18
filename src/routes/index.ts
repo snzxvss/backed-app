@@ -13,6 +13,14 @@ import { createEstadoPedido, getEstadosPedido, updateEstadoPedido, deleteEstadoP
 import { createEstadoPedidoMiddlewares, updateEstadoPedidoMiddlewares, deleteEstadoPedidoMiddlewares } from '../middlewares/estadoPedidoValidation';
 import { createOferta, getOfertas, updateOferta, deleteOferta } from '../controllers/ofertaController';
 import { createOfertaMiddlewares, updateOfertaMiddlewares, deleteOfertaMiddlewares } from '../middlewares/ofertaValidation';
+import { createCategoria, getCategorias, updateCategoria, deleteCategoria } from '../controllers/categoriaController';
+import { createCategoriaMiddlewares, updateCategoriaMiddlewares, deleteCategoriaMiddlewares } from '../middlewares/categoriaValidation';
+import { createRol, getRoles, updateRol, deleteRol } from '../controllers/rolController';
+import { createRolMiddlewares, updateRolMiddlewares, deleteRolMiddlewares } from '../middlewares/rolValidation';
+import { createSugerencia, getSugerencias, updateSugerencia, deleteSugerencia } from '../controllers/sugerenciaController';
+import { createSugerenciaMiddlewares, updateSugerenciaMiddlewares, deleteSugerenciaMiddlewares } from '../middlewares/sugerenciaValidation';
+import { createValoracion, getValoraciones, updateValoracion, deleteValoracion } from '../controllers/valoracionController';
+import { createValoracionMiddlewares, updateValoracionMiddlewares, deleteValoracionMiddlewares } from '../middlewares/valoracionValidation';
 
 
 import { jwtValidation } from '../middlewares/jwtValidation';
@@ -58,6 +66,30 @@ router.post('/ofertas', jwtValidation, createOfertaMiddlewares, createOferta);
 router.get('/ofertas', jwtValidation, getOfertas);
 router.put('/ofertas', jwtValidation, updateOfertaMiddlewares, updateOferta);
 router.delete('/ofertas/:id', jwtValidation, deleteOfertaMiddlewares, deleteOferta);
+
+//Categorias
+router.post('/categorias', jwtValidation, createCategoriaMiddlewares, createCategoria);
+router.get('/categorias', jwtValidation, getCategorias);
+router.put('/categorias', jwtValidation, updateCategoriaMiddlewares, updateCategoria);
+router.delete('/categorias/:id', jwtValidation, deleteCategoriaMiddlewares, deleteCategoria);
+
+//Rol
+router.post('/roles', jwtValidation, createRolMiddlewares, createRol);
+router.get('/roles', jwtValidation, getRoles);
+router.put('/roles', jwtValidation, updateRolMiddlewares, updateRol);
+router.delete('/roles/:id', jwtValidation, deleteRolMiddlewares, deleteRol);
+
+//Sugerencias
+router.post('/sugerencias', jwtValidation,  createSugerenciaMiddlewares, createSugerencia);
+router.get('/sugerencias', jwtValidation,  getSugerencias);
+router.put('/sugerencias', jwtValidation, updateSugerenciaMiddlewares, updateSugerencia);
+router.delete('/sugerencias/:id', jwtValidation, deleteSugerenciaMiddlewares, deleteSugerencia);
+
+//Valoraciones
+router.post('/valoraciones', jwtValidation, createValoracionMiddlewares, createValoracion);
+router.get('/valoraciones', jwtValidation, getValoraciones);
+router.put('/valoraciones', jwtValidation, updateValoracionMiddlewares, updateValoracion);
+router.delete('/valoraciones/:id', jwtValidation, deleteValoracionMiddlewares, deleteValoracion);
 
 
 export default router;

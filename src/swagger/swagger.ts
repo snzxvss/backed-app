@@ -1069,3 +1069,573 @@
  *             schema:
  *               $ref: '#/components/schemas/ErrorResponse'
  */
+/**
+ * @swagger
+ * /api/categorias:
+ *   post:
+ *     summary: Create a new categoria
+ *     tags: [Categoria]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 example: "Bebidas"
+ *               descripcion:
+ *                 type: string
+ *                 example: "Bebidas alcohólicas y no alcohólicas"
+ *     responses:
+ *       200:
+ *         description: Categoria created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error creating categoria
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/categorias:
+ *   get:
+ *     summary: Get all categorias
+ *     tags: [Categoria]
+ *     responses:
+ *       200:
+ *         description: List of categorias
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Categoria'
+ *       500:
+ *         description: Error fetching categorias
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/categorias:
+ *   put:
+ *     summary: Update a categoria
+ *     tags: [Categoria]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *               nombre:
+ *                 type: string
+ *                 example: "Bebidas"
+ *               descripcion:
+ *                 type: string
+ *                 example: "Bebidas alcohólicas y no alcohólicas"
+ *     responses:
+ *       200:
+ *         description: Categoria updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error updating categoria
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/categorias/{id}:
+ *   delete:
+ *     summary: Delete a categoria
+ *     tags: [Categoria]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Categoria ID
+ *     responses:
+ *       200:
+ *         description: Categoria deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error deleting categoria
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+/**
+ * @swagger
+ * /api/roles:
+ *   post:
+ *     summary: Create a new rol
+ *     tags: [Rol]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 example: "Admin"
+ *               descripcion:
+ *                 type: string
+ *                 example: "Administrador del sistema"
+ *     responses:
+ *       200:
+ *         description: Rol created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error creating rol
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/roles:
+ *   get:
+ *     summary: Get all roles
+ *     tags: [Rol]
+ *     responses:
+ *       200:
+ *         description: List of roles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Rol'
+ *       500:
+ *         description: Error fetching roles
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/roles:
+ *   put:
+ *     summary: Update a rol
+ *     tags: [Rol]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *               nombre:
+ *                 type: string
+ *                 example: "Admin"
+ *               descripcion:
+ *                 type: string
+ *                 example: "Administrador del sistema"
+ *     responses:
+ *       200:
+ *         description: Rol updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error updating rol
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/roles/{id}:
+ *   delete:
+ *     summary: Delete a rol
+ *     tags: [Rol]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Rol ID
+ *     responses:
+ *       200:
+ *         description: Rol deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error deleting rol
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+/**
+ * @swagger
+ * /api/sugerencias:
+ *   post:
+ *     summary: Create a new sugerencia
+ *     tags: [Sugerencia]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               categoria_id:
+ *                 type: integer
+ *                 example: 1
+ *               sugerencia:
+ *                 type: string
+ *                 example: "Agregar más opciones vegetarianas"
+ *     responses:
+ *       200:
+ *         description: Sugerencia created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error creating sugerencia
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/sugerencias:
+ *   get:
+ *     summary: Get all sugerencias
+ *     tags: [Sugerencia]
+ *     responses:
+ *       200:
+ *         description: List of sugerencias
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Sugerencia'
+ *       500:
+ *         description: Error fetching sugerencias
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/sugerencias:
+ *   put:
+ *     summary: Update a sugerencia
+ *     tags: [Sugerencia]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *               categoria_id:
+ *                 type: integer
+ *                 example: 1
+ *               sugerencia:
+ *                 type: string
+ *                 example: "Agregar más opciones vegetarianas"
+ *     responses:
+ *       200:
+ *         description: Sugerencia updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error updating sugerencia
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/sugerencias/{id}:
+ *   delete:
+ *     summary: Delete a sugerencia
+ *     tags: [Sugerencia]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Sugerencia ID
+ *     responses:
+ *       200:
+ *         description: Sugerencia deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error deleting sugerencia
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+/**
+ * @swagger
+ * /api/valoraciones:
+ *   post:
+ *     summary: Create a new valoracion
+ *     tags: [Valoracion]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               comida_id:
+ *                 type: integer
+ *                 example: 1
+ *               valoracion:
+ *                 type: integer
+ *                 example: 5
+ *               comentario:
+ *                 type: string
+ *                 example: "Delicious!"
+ *     responses:
+ *       200:
+ *         description: Valoracion created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error creating valoracion
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/valoraciones:
+ *   get:
+ *     summary: Get all valoraciones
+ *     tags: [Valoracion]
+ *     responses:
+ *       200:
+ *         description: List of valoraciones
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Valoracion'
+ *       500:
+ *         description: Error fetching valoraciones
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/valoraciones:
+ *   put:
+ *     summary: Update a valoracion
+ *     tags: [Valoracion]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: integer
+ *                 example: 1
+ *               comida_id:
+ *                 type: integer
+ *                 example: 1
+ *               valoracion:
+ *                 type: integer
+ *                 example: 5
+ *               comentario:
+ *                 type: string
+ *                 example: "Delicious!"
+ *     responses:
+ *       200:
+ *         description: Valoracion updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error updating valoracion
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /api/valoraciones/{id}:
+ *   delete:
+ *     summary: Delete a valoracion
+ *     tags: [Valoracion]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: Valoracion ID
+ *     responses:
+ *       200:
+ *         description: Valoracion deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error deleting valoracion
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */

@@ -45,6 +45,31 @@ const swaggerOptions = {
                         fecha_actualizacion: { type: 'string' },
                     },
                 },
+                Pedido: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        mesa_identificador: { type: 'string' },
+                        estado_id: { type: 'number' },
+                        usuario_id: { type: 'number' },
+                        total: { type: 'number' },
+                        fecha_pedido: { type: 'string' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
+                    },
+                },
+                DetallePedido: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        pedido_id: { type: 'number' },
+                        comida_id: { type: 'number' },
+                        cantidad: { type: 'number' },
+                        precio: { type: 'number' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
+                    },
+                },
                 EstadoPedido: {
                     type: 'object',
                     properties: {
@@ -64,19 +89,60 @@ const swaggerOptions = {
                             fecha_actualizacion: { type: 'string' },
                         },
                     },
-                    Oferta: {
-                        type: 'object',
-                        properties: {
-                            id: { type: 'number' },
-                            comida_id: { type: 'number' },
-                            descripcion: { type: 'string' },
-                            descuento: { type: 'number' },
-                            fecha_inicio: { type: 'string' },
-                            fecha_fin: { type: 'string' },
-                            foto_url: { type: 'string' },
-                            fecha_creacion: { type: 'string' },
-                            fecha_actualizacion: { type: 'string' },
-                        },
+                },
+                Oferta: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        comida_id: { type: 'number' },
+                        descripcion: { type: 'string' },
+                        descuento: { type: 'number' },
+                        fecha_inicio: { type: 'string' },
+                        fecha_fin: { type: 'string' },
+                        foto_url: { type: 'string' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
+                    },
+                },
+                Categoria: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        nombre: { type: 'string' },
+                        descripcion: { type: 'string' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
+                    },
+                },
+                Rol: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        nombre: { type: 'string' },
+                        descripcion: { type: 'string' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
+                    },
+                },
+                Sugerencia: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        categoria_id: { type: 'number' },
+                        sugerencia: { type: 'string' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
+                    },
+                },
+                Valoracion: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        comida_id: { type: 'number' },
+                        valoracion: { type: 'number' },
+                        comentario: { type: 'string' },
+                        fecha_creacion: { type: 'string' },
+                        fecha_actualizacion: { type: 'string' },
                     },
                 },
                 ErrorResponse: {
