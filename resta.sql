@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2024 a las 22:35:37
+-- Tiempo de generación: 19-12-2024 a las 23:50:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -61,16 +61,21 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `AutenticarPorUsuario` (IN `p_email`
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarCategorias` ()   BEGIN
-    SELECT CONCAT('[', GROUP_CONCAT(
-        JSON_OBJECT(
-            'id', id,
-            'nombre', nombre,
-            'descripcion', descripcion,
-            'fecha_creacion', fecha_creacion,
-            'fecha_actualizacion', fecha_actualizacion
-        )
-    ), ']') AS categorias
-    FROM categorias;
+  SELECT CONCAT(
+    '[',
+    GROUP_CONCAT(
+      JSON_OBJECT(
+        'id', id,
+        'nombre', nombre,
+        'descripcion', IFNULL(descripcion, ''),
+        'fecha_creacion', DATE_FORMAT(fecha_creacion, '%Y-%m-%d %H:%i:%s'),
+        'fecha_actualizacion', DATE_FORMAT(fecha_actualizacion, '%Y-%m-%d %H:%i:%s'),
+        'imagen', imagen
+      )
+    ),
+    ']'
+  ) AS categorias
+  FROM categorias;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarComidas` ()   BEGIN
@@ -118,20 +123,25 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarEstadosPedido` ()   BEGIN
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarOfertas` ()   BEGIN
-    SELECT CONCAT('[', GROUP_CONCAT(
-        JSON_OBJECT(
-            'id', id,
-            'comida_id', comida_id,
-            'descripcion', descripcion,
-            'descuento', descuento,
-            'fecha_inicio', fecha_inicio,
-            'fecha_fin', fecha_fin,
-            'foto_url', foto_url,
-            'fecha_creacion', fecha_creacion,
-            'fecha_actualizacion', fecha_actualizacion
-        )
-    ), ']') AS ofertas
-    FROM ofertas;
+    SELECT CONCAT(
+        '[',
+        GROUP_CONCAT(
+            JSON_OBJECT(
+                'id', o.id,
+                'comida_id', o.comida_id,
+                'descripcion', o.descripcion,
+                'descuento', o.descuento,
+                'fecha_inicio', o.fecha_inicio,
+                'fecha_fin', o.fecha_fin,
+                'foto_url', COALESCE(o.foto_url, c.foto_url),
+                'fecha_creacion', o.fecha_creacion,
+                'fecha_actualizacion', o.fecha_actualizacion
+            ) SEPARATOR ','
+        ),
+        ']'
+    ) AS ofertas_json
+    FROM ofertas o
+    LEFT JOIN comida c ON o.comida_id = c.id;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarPedidos` ()   BEGIN
@@ -390,18 +400,19 @@ CREATE TABLE `categorias` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` text DEFAULT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp(),
-  `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `fecha_actualizacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `imagen` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `categorias`
 --
 
-INSERT INTO `categorias` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, 'Entradas', 'Platos de entrada', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(2, 'Platos principales', 'Platos principales', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(3, 'Postres', 'Postres', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(4, 'Bebidas', 'Bebidas', '2024-12-17 19:51:10', '2024-12-17 19:51:10');
+INSERT INTO `categorias` (`id`, `nombre`, `descripcion`, `fecha_creacion`, `fecha_actualizacion`, `imagen`) VALUES
+(1, 'Entradas', 'Platos de entrada', '2024-12-17 19:51:10', '2024-12-19 20:21:46', '/images/1734638956859-484161595.png'),
+(2, 'Platos principales', 'Platos principales', '2024-12-17 19:51:10', '2024-12-19 20:21:49', '/images/1734638956859-484161595.png'),
+(3, 'Postres', 'Postres', '2024-12-17 19:51:10', '2024-12-19 20:21:52', '/images/1734638956859-484161595.png'),
+(4, 'Bebidas', 'Bebidas', '2024-12-17 19:51:10', '2024-12-19 20:21:54', '/images/1734638956859-484161595.png');
 
 -- --------------------------------------------------------
 
@@ -425,10 +436,10 @@ CREATE TABLE `comida` (
 --
 
 INSERT INTO `comida` (`id`, `nombre`, `descripcion`, `precio`, `categoria_id`, `foto_url`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, 'Ensalada Cesar', 'Ensalada con lechuga, crutones y aderezo Cesar', 5.99, 1, 'https://example.com/ensalada_cesar.jpg', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(2, 'Sopa de Pollo', 'Sopa de pollo con verduras', 4.99, 2, 'https://example.com/sopa_pollo.jpg', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(3, 'Tarta de Queso', 'Tarta de queso con mermelada de fresa', 3.99, 3, 'https://example.com/tarta_queso.jpg', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(4, 'Jugo de Naranja', 'Jugo de naranja natural', 2.99, 4, 'https://example.com/jugo_naranja.jpg', '2024-12-17 19:51:10', '2024-12-17 19:51:10');
+(1, 'Ensalada Cesar', 'Ensalada con lechuga, crutones y aderezo Cesar', 20000.00, 1, '/images/1734643041371-102985027.jpg', '2024-12-17 19:51:10', '2024-12-19 21:18:27'),
+(2, 'Sopa de Pollo', 'Sopa de pollo con verduras', 30000.00, 2, '/images/1734643041371-102985027.jpg', '2024-12-17 19:51:10', '2024-12-19 21:18:22'),
+(3, 'Tarta de Queso', 'Tarta de queso con mermelada de fresa', 12000.00, 3, '/images/1734643041371-102985027.jpg', '2024-12-17 19:51:10', '2024-12-19 21:18:34'),
+(4, 'Jugo de Naranja', 'Jugo de naranja natural', 4000.00, 4, '/images/1734643041371-102985027.jpg', '2024-12-17 19:51:10', '2024-12-19 21:18:44');
 
 -- --------------------------------------------------------
 
@@ -503,8 +514,8 @@ CREATE TABLE `ofertas` (
 --
 
 INSERT INTO `ofertas` (`id`, `comida_id`, `descripcion`, `descuento`, `fecha_inicio`, `fecha_fin`, `foto_url`, `fecha_creacion`, `fecha_actualizacion`) VALUES
-(1, 1, 'Descuento del 10% en ensaladas', 10.00, '2023-01-01 00:00:00', '2023-01-31 23:59:59', 'https://example.com/oferta_ensalada.jpg', '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
-(2, 2, 'Descuento del 15% en sopas', 15.00, '2023-02-01 00:00:00', '2023-02-28 23:59:59', 'https://example.com/oferta_sopa.jpg', '2024-12-17 19:51:10', '2024-12-17 19:51:10');
+(1, 1, 'Descuento del 10% en ensaladas', 50.00, '2023-01-01 00:00:00', '2023-01-31 23:59:59', NULL, '2024-12-17 19:51:10', '2024-12-19 21:19:19'),
+(2, 2, 'Descuento del 15% en sopas', 10.00, '2023-02-01 00:00:00', '2023-02-28 23:59:59', NULL, '2024-12-17 19:51:10', '2024-12-19 21:19:24');
 
 -- --------------------------------------------------------
 
@@ -605,7 +616,10 @@ INSERT INTO `usuarios` (`id`, `nombre`, `email`, `telefono`, `password`, `rol_id
 (3, 'Carlos Sanchez', 'carlos.sanchez@example.com', '3023456789', 'password123', 3, '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
 (4, 'Ana Gomez', 'vosssanz@gmail.com', '3023606047', 'sanzvoss', 4, '2024-12-17 19:51:10', '2024-12-17 19:51:10'),
 (5, '', NULL, '1234567890', NULL, NULL, '2024-12-17 21:10:26', '2024-12-17 21:20:56'),
-(6, '', NULL, '000000', NULL, NULL, '2024-12-18 20:47:56', '2024-12-18 20:47:56');
+(6, '', NULL, '000000', NULL, NULL, '2024-12-18 20:47:56', '2024-12-18 20:47:56'),
+(7, '', NULL, '00000', NULL, NULL, '2024-12-19 20:32:31', '2024-12-19 20:32:31'),
+(8, '', NULL, '0000000', NULL, NULL, '2024-12-19 22:29:54', '2024-12-19 22:29:54'),
+(9, '', NULL, '000', NULL, NULL, '2024-12-19 22:40:43', '2024-12-19 22:40:43');
 
 -- --------------------------------------------------------
 
@@ -775,7 +789,7 @@ ALTER TABLE `sugerencias`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `valoraciones`

@@ -26,16 +26,28 @@ export const createOferta = async (req: Request, res: Response) => {
 export const getOfertas = async (req: Request, res: Response) => {
     try {
         const [rows] = await query('CALL ConsultarOfertas()') as RowDataPacket[][];
-        const ofertasJson = rows[0].ofertas;
+
+        if (rows.length === 0 || !rows[0].ofertas_json) {
+            const response: ApiResponse<Oferta[]> = {
+                success: true,
+                data: [],
+            };
+            res.setHeader('Cache-Control', 'no-store'); 
+            return res.json(response);
+        }
+
+        const ofertasJson = rows[0].ofertas_json;
+
         const ofertas: Oferta[] = JSON.parse(ofertasJson);
 
         const response: ApiResponse<Oferta[]> = {
             success: true,
             data: ofertas,
         };
-        res.setHeader('Cache-Control', 'no-store'); // Disable caching
+        res.setHeader('Cache-Control', 'no-store');
         res.json(response);
     } catch (error) {
+        console.error('Error fetching ofertas:', error);
         const response: ErrorResponse = {
             success: false,
             message: 'Error fetching ofertas',

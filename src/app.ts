@@ -5,6 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import { createConnection } from './database';
 import router from './routes/index';
 import swaggerDocs from './swagger/swaggerDocs';
+import path from 'path';
 
 const app = express();
 
@@ -21,6 +22,11 @@ createConnection().then(() => {
 }).catch((error) => {
     console.error('Database connection failed:', error);
 });
+
+const imagesPath = path.join(__dirname, '..', 'public', 'images');
+console.log('Serving images from:', imagesPath);
+app.use('/images', express.static(imagesPath));
+
 
 app.use('/api', router);
 
